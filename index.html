@@ -1,9 +1,358 @@
-<html>
- 
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard de Doctorados</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --primary-bg: #f8f9fa;
+            --card-bg: #ffffff;
+            --text-main: #2b2b2b;
+            --text-muted: #6c757d;
+            --accent: #0d6efd;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--primary-bg);
+            color: var(--text-main);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .dashboard-container {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+            padding: 30px 50px;
+            width: 100%;
+            max-width: 1000px;
+            position: relative;
+        }
+
+        .carousel-slide {
+            display: none;
+            animation: fadeIn 0.4s ease-in-out;
+        }
+
+        .carousel-slide.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        h1 {
+            margin: 0 0 10px 0;
+            font-size: 1.6rem;
+            color: #1a1a1a;
+        }
+
+        p.subtitle {
+            margin: 0 auto;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.5;
+            max-width: 800px;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 450px;
+            width: 100%;
+        }
+
+        /* Controles del Carrusel (Flechas y Puntos) */
+        .nav-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: var(--card-bg);
+            border: 1px solid #dee2e6;
+            color: var(--text-muted);
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            z-index: 10;
+            transition: all 0.2s ease;
+        }
+
+        .nav-arrow:hover {
+            background-color: var(--accent);
+            color: #fff;
+            border-color: var(--accent);
+        }
+
+        .nav-arrow.left {
+            left: -20px;
+        }
+
+        .nav-arrow.right {
+            right: -20px;
+        }
+
+        .carousel-nav {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 15px;
+            padding-top: 15px;
+        }
+
+        .carousel-indicators {
+            display: flex;
+            gap: 12px;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: #ced4da;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .dot.active {
+            background-color: var(--accent);
+        }
+
+        /* Ajustes para pantallas pequeñas */
+        @media (max-width: 768px) {
+            .nav-arrow.left {
+                left: 10px;
+            }
+
+            .nav-arrow.right {
+                right: 10px;
+            }
+
+            .dashboard-container {
+                padding: 30px 15px;
+            }
+        }
+    </style>
+</head>
+
 <body>
-  <h1>Juan Carlos Pedrouzo</h1>
-  <p>Welcome to my website!</p>
-  <img src="https://content.codecademy.com/articles/github-pages-via-web-app/happy-ice-cream.gif" />
+
+    <div class="dashboard-container">
+
+        <button class="nav-arrow left" onclick="prevSlide()">&#10094;</button>
+
+        <div class="carousel-slide active" id="slide0">
+            <header>
+                <h1>Doctorados: Matrícula Vs. Graduaciones</h1>
+                <p class="subtitle">Comparativa general (2020 - 2024)</p>
+            </header>
+            <div class="chart-container">
+                <canvas id="chart1"></canvas>
+            </div>
+        </div>
+
+        <div class="carousel-slide" id="slide1">
+            <header>
+                <h1>Evolución de Matrículas por Universidad</h1>
+                <p class="subtitle">Comparativa de Volumen entre Universidades Oficiales y Particulares (2020 - 2024P)
+                </p>
+            </header>
+            <div class="chart-container">
+                <canvas id="chart2"></canvas>
+            </div>
+        </div>
+
+        <div class="carousel-slide" id="slide2">
+            <header>
+                <h1>Áreas de Estudio</h1>
+                <p class="subtitle">Este gráfico muestra el "ADN" de los doctorados en Panamá: una fuerte inclinación
+                    hacia las Ciencias Sociales y Administrativas (82% del total histórico).</p>
+            </header>
+            <div class="chart-container">
+                <canvas id="areaChart"></canvas>
+            </div>
+        </div>
+
+        <button class="nav-arrow right" onclick="nextSlide()">&#10095;</button>
+
+        <div class="carousel-nav">
+            <div class="carousel-indicators">
+                <div class="dot active" onclick="goToSlide(0)"></div>
+                <div class="dot" onclick="goToSlide(1)"></div>
+                <div class="dot" onclick="goToSlide(2)"></div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        /* ==============================================================
+           LÓGICA DEL CARRUSEL
+           ============================================================== */
+        let currentSlide = 0;
+        const totalSlides = 3;
+
+        function showSlide(index) {
+            for (let i = 0; i < totalSlides; i++) {
+                document.getElementById('slide' + i).classList.remove('active');
+                document.querySelectorAll('.dot')[i].classList.remove('active');
+            }
+            document.getElementById('slide' + index).classList.add('active');
+            document.querySelectorAll('.dot')[index].classList.add('active');
+            currentSlide = index;
+        }
+
+        function nextSlide() {
+            let next = (currentSlide + 1) % totalSlides;
+            showSlide(next);
+        }
+
+        function prevSlide() {
+            let prev = (currentSlide - 1 + totalSlides) % totalSlides;
+            showSlide(prev);
+        }
+
+        function goToSlide(index) {
+            showSlide(index);
+        }
+
+        /* ==============================================================
+           INICIALIZACIÓN GRÁFICA 1 (Matrícula vs Graduaciones)
+           ============================================================== */
+        const ctx1 = document.getElementById('chart1').getContext('2d');
+        const labels1 = ['2020', '2021', '2022', '2023', '2024'];
+        const matricula1 = [157, 334, 286, 606, 1606];
+        const grads1 = [7, 39, 71, 64, 117];
+
+        new Chart(ctx1, {
+            type: 'bar',
+            data: {
+                labels: labels1,
+                datasets: [
+                    {
+                        label: 'Matriculados',
+                        data: matricula1,
+                        backgroundColor: 'rgba(13, 110, 253, 0.7)',
+                        borderColor: '#0d6efd',
+                        borderWidth: 1,
+                        order: 2
+                    },
+                    {
+                        label: 'Graduados',
+                        data: grads1,
+                        type: 'line',
+                        backgroundColor: '#198754',
+                        borderColor: '#198754',
+                        borderWidth: 3,
+                        pointBackgroundColor: '#fff',
+                        pointBorderColor: '#198754',
+                        pointBorderWidth: 2,
+                        pointRadius: 5,
+                        tension: 0.3,
+                        order: 1
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'bottom' },
+                    tooltip: { mode: 'index', intersect: false }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: { display: true, text: 'Cantidad de Personas' }
+                    }
+                }
+            }
+        });
+
+        /* ==============================================================
+           INICIALIZACIÓN GRÁFICA 2 (Universidades - Barras Apiladas)
+           ============================================================== */
+        const ctx2 = document.getElementById('chart2').getContext('2d');
+        const labels2 = ['2020', '2021', '2022', '2023', '2024(P)'];
+
+        const datasets2 = [
+            { label: 'UP', data: [25, 40, 63, 293, 255], borderColor: '#0d6efd', backgroundColor: 'rgba(13, 110, 253, 0.8)', borderWidth: 1 },
+            { label: 'UTP', data: [0, 14, 0, 20, 43], borderColor: '#6610f2', backgroundColor: 'rgba(102, 16, 242, 0.8)', borderWidth: 1 },
+            { label: 'UNACHI', data: [41, 173, 85, 28, 116], borderColor: '#198754', backgroundColor: 'rgba(25, 135, 84, 0.8)', borderWidth: 1 },
+            { label: 'UDELAS', data: [23, 16, 19, 46, 30], borderColor: '#dc3545', backgroundColor: 'rgba(220, 53, 69, 0.8)', borderWidth: 1 },
+            { label: 'UMIP', data: [0, 0, 0, 0, 0], borderColor: '#ffc107', backgroundColor: 'rgba(255, 193, 7, 0.8)', borderWidth: 1 },
+            { label: 'Particulares', data: [68, 91, 119, 219, 1162], borderColor: '#fd7e14', backgroundColor: 'rgba(253, 126, 20, 0.8)', borderWidth: 1 }
+        ];
+
+        new Chart(ctx2, {
+            type: 'bar', // Tipo barra fijo
+            data: { labels: labels2, datasets: datasets2 },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'bottom', labels: { usePointStyle: true, padding: 20 } },
+                    tooltip: { mode: 'index', intersect: false }
+                },
+                scales: {
+                    y: { stacked: true, beginAtZero: true, title: { display: true, text: 'Cantidad' } },
+                    x: { stacked: true, title: { display: true, text: 'Año' } }
+                },
+                interaction: { mode: 'nearest', axis: 'x', intersect: false }
+            }
+        });
+
+        /* ==============================================================
+           INICIALIZACIÓN GRÁFICA 3 (Áreas de Estudio - Doughnut)
+           ============================================================== */
+        new Chart(document.getElementById('areaChart'), {
+            type: 'doughnut',
+            data: {
+                labels: ['Educación', 'Humanidades', 'Admin/Negocios', 'Ingeniería/TI', 'Otros'],
+                datasets: [{
+                    data: [42, 9, 31, 12, 6],
+                    backgroundColor: ['#4f46e5', '#ec4899', '#10b981', '#f59e0b', '#94a3b8'],
+                    borderWidth: 2,
+                    borderColor: '#ffffff'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                cutout: '65%',
+                plugins: {
+                    legend: { position: 'right', labels: { padding: 20, usePointStyle: true, pointStyle: 'circle' } },
+                    tooltip: { mode: 'index', intersect: false }
+                }
+            }
+        });
+    </script>
 </body>
- 
+
 </html>
