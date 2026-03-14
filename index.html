@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Formación de Investigadores en Panamá</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
 
@@ -12,20 +13,23 @@
         :root {
             --primary-bg: #f8f9fa;
             --card-bg: #ffffff;
-            --text-main: #2b2b2b;
-            --text-muted: #6c757d;
-            --accent: #0d6efd;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --accent: #3b82f6;
         }
 
         /* Habilitar desplazamiento suave en todo el documento */
         html {
             scroll-behavior: smooth;
+            font-family: 'Inter', sans-serif;
         }
 
         body {
             margin: 0;
             padding: 0;
             overflow-x: hidden;
+            background-color: var(--primary-bg);
+            color: var(--text-main);
         }
 
         /* Secciones de Pantalla Completa */
@@ -40,208 +44,90 @@
             box-sizing: border-box;
         }
 
-        /* ----- ESTILOS ESPECÍFICOS PARA PÁGINA 1 ----- */
-        #pagina1 {
-            background-color: var(--primary-bg);
-            padding: 40px 20px;
+        /* Estilos compartidos para las páginas de gráficas */
+        .chart-section {
+            padding: 60px 20px;
         }
 
-        .dashboard-container {
+        .chart-card {
             background-color: var(--card-bg);
-            border-radius: 12px;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
-            padding: 30px 50px;
+            border-radius: 24px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+            padding: 40px 50px;
             width: 100%;
-            max-width: 1000px;
-            position: relative;
-        }
-
-        /* Botones de Navegación Vertical Centrados */
-        .vertical-nav-btn {
-            background-color: var(--accent);
-            color: white;
-            border: none;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            font-size: 1.5rem;
-            font-weight: bold;
-            cursor: pointer;
+            max-width: 1100px;
+            height: auto;
+            min-height: 75vh;
             display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 12px rgba(13, 110, 253, 0.4);
-            transition: all 0.3s ease;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(226, 232, 240, 0.8);
+        }
+
+        /* Fondo decorativo */
+        .chart-card::before {
+            content: '';
             position: absolute;
-            z-index: 100;
-            left: 50%;
+            top: -50px;
+            right: -50px;
+            width: 200px;
+            height: 200px;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(139, 92, 246, 0.15));
+            border-radius: 50%;
+            z-index: 0;
+            filter: blur(25px);
         }
 
-        .vertical-nav-btn:hover {
-            background-color: #0b5ed7;
-        }
-
-        .btn-down {
-            bottom: 30px;
-            transform: translateX(-50%);
-            animation: bounce 2s infinite;
-        }
-
-        .btn-up {
-            top: 30px;
-            transform: translateX(-50%);
-        }
-
-        .btn-up:hover,
-        .btn-down:hover {
-            transform: translateX(-50%) scale(1.1);
-        }
-
-        @keyframes bounce {
-
-            0%,
-            20%,
-            50%,
-            80%,
-            100% {
-                transform: translateX(-50%) translateY(0);
-            }
-
-            40% {
-                transform: translateX(-50%) translateY(-10px);
-            }
-
-            60% {
-                transform: translateX(-50%) translateY(-5px);
-            }
-        }
-
-        /* Elementos del Carrusel de la Página 1 */
-        .carousel-slide {
-            display: none;
-            animation: fadeIn 0.4s ease-in-out;
-        }
-
-        .carousel-slide.active {
-            display: block;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        #pagina1 header {
+        .chart-header {
             text-align: center;
-            margin-bottom: 25px;
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 10;
         }
 
-        #pagina1 h1 {
+        .chart-header h1 {
             margin: 0 0 10px 0;
-            font-size: 1.6rem;
-            color: #1a1a1a;
-            font-weight: bold;
+            font-size: 2.2rem;
+            color: #0f172a;
+            font-weight: 800;
+            background: linear-gradient(90deg, #0f172a, #334155);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
-        #pagina1 p.subtitle {
+        .chart-header p.subtitle {
             margin: 0 auto;
             color: var(--text-muted);
-            font-size: 0.95rem;
-            line-height: 1.5;
+            font-size: 1.1rem;
+            line-height: 1.6;
             max-width: 800px;
+            font-weight: 500;
         }
 
-        .chart-container {
+        .canvas-container {
+            flex-grow: 1;
             position: relative;
-            height: 450px;
             width: 100%;
-        }
-
-        .nav-arrow {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background-color: var(--card-bg);
-            border: 1px solid #dee2e6;
-            color: var(--text-muted);
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            font-size: 1.2rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            min-height: 450px;
             z-index: 10;
-            transition: all 0.2s ease;
-        }
-
-        .nav-arrow:hover {
-            background-color: var(--accent);
-            color: #fff;
-            border-color: var(--accent);
-        }
-
-        .nav-arrow.left {
-            left: -20px;
-        }
-
-        .nav-arrow.right {
-            right: -20px;
-        }
-
-        .carousel-nav {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-top: 15px;
-            padding-top: 15px;
-        }
-
-        .carousel-indicators {
-            display: flex;
-            gap: 12px;
-        }
-
-        .dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background-color: #ced4da;
-            cursor: pointer;
-            transition: background-color 0.2s;
-        }
-
-        .dot.active {
-            background-color: var(--accent);
         }
 
         @media (max-width: 768px) {
-            .nav-arrow.left {
-                left: 10px;
+            .chart-card {
+                padding: 30px 20px;
             }
 
-            .nav-arrow.right {
-                right: 10px;
-            }
-
-            .dashboard-container {
-                padding: 30px 15px;
+            .chart-header h1 {
+                font-size: 1.6rem;
             }
         }
     </style>
 </head>
 
-<body class="bg-slate-50 text-slate-900 font-sans antialiased">
+<body class="bg-slate-50 text-slate-800 font-sans antialiased">
 
+    <!-- PÁGINA 0: Intro -->
     <section id="pagina0"
         class="page-section bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 text-white relative">
         <div class="max-w-7xl mx-auto px-4 w-full flex flex-col items-center justify-center text-center">
@@ -250,12 +136,12 @@
             </span>
             <h1
                 class="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter leading-tight text-transparent bg-clip-text bg-gradient-to-b from-white to-blue-200 text-balance drop-shadow-lg pb-2 lg:pb-4">
-                ¿Cuántos doctorados se gradúan anualmente en Panamá y en qué áreas?
+                1. ¿Cuántos doctorados se gradúan anualmente en Panamá y en qué áreas?
             </h1>
         </div>
-        <div class="absolute bottom-10 animate-bounce text-blue-300 opacity-80 cursor-pointer flex flex-col items-center hover:text-white transition-colors"
+        <div class="absolute bottom-5 left-1/2 transform -translate-x-1/2 animate-bounce text-blue-300 opacity-80 cursor-pointer flex flex-col items-center hover:text-white transition-colors z-50"
             onclick="scrollToSection('pagina1')">
-            <span class="text-[10px] uppercase font-bold tracking-widest mb-2">Deslizar</span>
+            <span class="text-[10px] uppercase font-bold tracking-widest mb-1">Bajar</span>
             <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3">
                 </path>
@@ -263,70 +149,112 @@
         </div>
     </section>
 
-    <section id="pagina1" class="page-section">
-        <div class="dashboard-container">
-
-            <button class="nav-arrow left" onclick="prevSlide()">&#10094;</button>
-
-            <div class="carousel-slide active" id="slide0">
-                <header>
-                    <h1>Doctorados: Matrículas Vs. Graduaciones</h1>
-                    <p class="subtitle">Comparativa general (2020 - 2024)</p>
-                </header>
-                <div class="chart-container">
-                    <canvas id="chart1"></canvas>
-                </div>
+    <!-- PÁGINA 1: Gráfica 1 -->
+    <section id="pagina1" class="page-section chart-section relative">
+        <div class="absolute top-5 left-1/2 transform -translate-x-1/2 animate-bounce text-slate-400 opacity-80 cursor-pointer flex flex-col items-center hover:text-slate-600 transition-colors z-50"
+            onclick="scrollToSection('pagina0')">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
+            </svg>
+            <span class="text-[10px] uppercase font-bold tracking-widest mt-1">Subir</span>
+        </div>
+        <div class="chart-card">
+            <div class="chart-header">
+                <h1>Doctorados: Matrículas Vs. Graduaciones</h1>
+                <p class="subtitle">Comparativa general de volumen (2020 - 2024)</p>
             </div>
-
-            <div class="carousel-slide" id="slide1">
-                <header>
-                    <h1>Evolución de Matrículas por Universidad</h1>
-                    <p class="subtitle">Comparativa de Volumen entre Universidades Oficiales y Particulares (2020 -
-                        2024)</p>
-                </header>
-                <div class="chart-container">
-                    <canvas id="chart2"></canvas>
-                </div>
-            </div>
-
-            <div class="carousel-slide" id="slide2">
-                <header>
-                    <h1>Áreas de Estudio</h1>
-                    <p class="subtitle">Fuerte inclinación hacia las Ciencias Sociales y Administrativas (82% del total
-                        histórico).</p>
-                </header>
-                <div class="chart-container">
-                    <canvas id="areaChart"></canvas>
-                </div>
-            </div>
-
-            <button class="nav-arrow right" onclick="nextSlide()">&#10095;</button>
-
-            <div class="carousel-nav">
-                <div class="carousel-indicators">
-                    <div class="dot active" onclick="goToSlide(0)"></div>
-                    <div class="dot" onclick="goToSlide(1)"></div>
-                    <div class="dot" onclick="goToSlide(2)"></div>
-                </div>
+            <div class="canvas-container">
+                <canvas id="chart1"></canvas>
             </div>
         </div>
-
+        <div class="absolute bottom-5 left-1/2 transform -translate-x-1/2 animate-bounce text-slate-400 opacity-80 cursor-pointer flex flex-col items-center hover:text-slate-600 transition-colors z-50"
+            onclick="scrollToSection('pagina2')">
+            <span class="text-[10px] uppercase font-bold tracking-widest mb-1">Bajar</span>
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3">
+                </path>
+            </svg>
+        </div>
     </section>
 
-    <section id="pagina2" class="page-section bg-slate-50 relative pt-24 pb-12">
+    <!-- PÁGINA 2: Gráfica 2 -->
+    <section id="pagina2" class="page-section chart-section relative">
+        <div class="absolute top-5 left-1/2 transform -translate-x-1/2 animate-bounce text-slate-400 opacity-80 cursor-pointer flex flex-col items-center hover:text-slate-600 transition-colors z-50"
+            onclick="scrollToSection('pagina1')">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
+            </svg>
+            <span class="text-[10px] uppercase font-bold tracking-widest mt-1">Subir</span>
+        </div>
+        <div class="chart-card">
+            <div class="chart-header">
+                <h1>Evolución de Matrículas por Universidad</h1>
+                <p class="subtitle">Comparativa de Volumen entre Universidades Oficiales y Particulares (2020 - 2024)
+                </p>
+            </div>
+            <div class="canvas-container">
+                <canvas id="chart2"></canvas>
+            </div>
+        </div>
+        <div class="absolute bottom-5 left-1/2 transform -translate-x-1/2 animate-bounce text-slate-400 opacity-80 cursor-pointer flex flex-col items-center hover:text-slate-600 transition-colors z-50"
+            onclick="scrollToSection('pagina3')">
+            <span class="text-[10px] uppercase font-bold tracking-widest mb-1">Bajar</span>
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3">
+                </path>
+            </svg>
+        </div>
+    </section>
 
+    <!-- PÁGINA 3: Gráfica 3 -->
+    <section id="pagina3" class="page-section chart-section relative">
+        <div class="absolute top-5 left-1/2 transform -translate-x-1/2 animate-bounce text-slate-400 opacity-80 cursor-pointer flex flex-col items-center hover:text-slate-600 transition-colors z-50"
+            onclick="scrollToSection('pagina2')">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
+            </svg>
+            <span class="text-[10px] uppercase font-bold tracking-widest mt-1">Subir</span>
+        </div>
+        <div class="chart-card">
+            <div class="chart-header">
+                <h1>Áreas de Estudio</h1>
+                <p class="subtitle">Fuerte inclinación hacia las Ciencias Sociales y Administrativas (82% del total
+                    histórico).</p>
+            </div>
+            <div class="canvas-container">
+                <canvas id="areaChart"></canvas>
+            </div>
+        </div>
+        <div class="absolute bottom-5 left-1/2 transform -translate-x-1/2 animate-bounce text-slate-400 opacity-80 cursor-pointer flex flex-col items-center hover:text-slate-600 transition-colors z-50"
+            onclick="scrollToSection('pagina4')">
+            <span class="text-[10px] uppercase font-bold tracking-widest mb-1">Bajar</span>
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3">
+                </path>
+            </svg>
+        </div>
+    </section>
+
+    <!-- PÁGINA 4: Infografía (Programas Líderes por Área) -->
+    <section id="pagina4" class="page-section bg-slate-50 relative pt-16 pb-12 relative">
+        <div class="absolute top-5 left-1/2 transform -translate-x-1/2 animate-bounce text-slate-400 opacity-80 cursor-pointer flex flex-col items-center hover:text-slate-600 transition-colors z-50"
+            onclick="scrollToSection('pagina3')">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
+            </svg>
+            <span class="text-[10px] uppercase font-bold tracking-widest mt-1">Subir</span>
+        </div>
         <div class="max-w-6xl mx-auto px-4 w-full">
-
-            <header class="mb-12 border-b border-slate-200 pb-8 text-left">
+            <header class="mb-6 text-left">
                 <h1 class="text-3xl md:text-4xl font-black text-slate-800 tracking-tight uppercase">Programas Líderes
                     por Área</h1>
-                <p class="text-slate-600 mt-2 max-w-3xl">
+                <p class="text-slate-600 mt-1 max-w-3xl">
                     Basado en la investigación de egreso oficial (INEC 2024).
                 </p>
             </header>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-
+                <!-- Educación -->
                 <div class="area-card bg-white rounded-2xl border-t-4 border-indigo-600 p-6 shadow-sm">
                     <div class="flex items-center gap-3 mb-4">
                         <span class="text-2xl">&#x1F4D6;</span>
@@ -351,6 +279,7 @@
                     </div>
                 </div>
 
+                <!-- Admin / Negocios -->
                 <div class="area-card bg-white rounded-2xl border-t-4 border-emerald-600 p-6 shadow-sm">
                     <div class="flex items-center gap-3 mb-4">
                         <span class="text-2xl">&#x1F4BC;</span>
@@ -375,6 +304,7 @@
                     </div>
                 </div>
 
+                <!-- Humanidades -->
                 <div class="area-card bg-white rounded-2xl border-t-4 border-pink-600 p-6 shadow-sm">
                     <div class="flex items-center gap-3 mb-4">
                         <span class="text-2xl">&#x1F5FD;</span>
@@ -399,6 +329,7 @@
                     </div>
                 </div>
 
+                <!-- Ingeniería / TI -->
                 <div class="area-card bg-white rounded-2xl border-t-4 border-amber-500 p-6 shadow-sm">
                     <div class="flex items-center gap-3 mb-4">
                         <span class="text-2xl">&#x1F3D7;</span>
@@ -419,6 +350,7 @@
                     </div>
                 </div>
 
+                <!-- Ciencias de la Salud -->
                 <div class="area-card bg-white rounded-2xl border-t-4 border-rose-600 p-6 shadow-sm">
                     <div class="flex items-center gap-3 mb-4">
                         <span class="text-2xl">&#x1F48A;</span>
@@ -448,37 +380,57 @@
                         profesionalización docente y corporativa."
                     </p>
                 </div>
-
             </div>
 
-            <footer class="mt-12 text-center text-slate-400 text-xs uppercase tracking-tighter">
-                Análisis de Títulos Doctorales 2024 | Panamá.
-            </footer>
-
+        </div>
+        <div class="absolute bottom-5 left-1/2 transform -translate-x-1/2 animate-bounce text-slate-400 opacity-80 cursor-pointer flex flex-col items-center hover:text-slate-600 transition-colors z-50"
+            onclick="scrollToSection('pagina5')">
+            <span class="text-[10px] uppercase font-bold tracking-widest mb-1">Bajar</span>
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3">
+                </path>
+            </svg>
         </div>
     </section>
 
-    <section id="pagina3"
+    <!-- PÁGINA 5: Intro Acreditaciones -->
+    <section id="pagina5"
         class="page-section bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 text-white relative">
+        <div class="absolute top-5 left-1/2 transform -translate-x-1/2 animate-bounce text-blue-300 opacity-80 cursor-pointer flex flex-col items-center hover:text-white transition-colors z-50"
+            onclick="scrollToSection('pagina4')">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
+            </svg>
+            <span class="text-[10px] uppercase font-bold tracking-widest mt-1">Subir</span>
+        </div>
         <div class="max-w-7xl mx-auto px-4 w-full flex flex-col items-center justify-center text-center">
             <span class="text-amber-400 font-bold uppercase tracking-[0.2em] text-sm md:text-base mb-6 drop-shadow-md">
                 Formación de investigadores
             </span>
             <h1
                 class="text-4xl md:text-6xl lg:text-7xl font-black tracking-tighter leading-tight text-transparent bg-clip-text bg-gradient-to-b from-white to-blue-200 text-balance drop-shadow-lg pb-2 lg:pb-4">
-                ¿Existen suficientes programas de doctorado nacionales con estándares internacionales?
+                2. ¿Existen suficientes programas de doctorado nacionales con estándares internacionales?
             </h1>
         </div>
-        <div class="absolute top-10 animate-bounce text-blue-300 opacity-80 cursor-pointer flex flex-col items-center hover:text-white transition-colors"
-            onclick="scrollToSection('pagina2')">
+        <div class="absolute bottom-5 left-1/2 transform -translate-x-1/2 animate-bounce text-blue-300 opacity-80 cursor-pointer flex flex-col items-center hover:text-white transition-colors z-50"
+            onclick="scrollToSection('pagina6')">
+            <span class="text-[10px] uppercase font-bold tracking-widest mb-1">Bajar</span>
             <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3">
+                </path>
             </svg>
-            <span class="text-[10px] uppercase font-bold tracking-widest mt-2">Subir</span>
         </div>
     </section>
 
-    <section id="pagina4" class="page-section bg-slate-100 relative pt-24 pb-12">
+    <!-- PÁGINA 6: Infografía (Acreditaciones) -->
+    <section id="pagina6" class="page-section bg-slate-100 relative pt-24 pb-12 relative">
+        <div class="absolute top-5 left-1/2 transform -translate-x-1/2 animate-bounce text-slate-400 opacity-80 cursor-pointer flex flex-col items-center hover:text-slate-600 transition-colors z-50"
+            onclick="scrollToSection('pagina5')">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
+            </svg>
+            <span class="text-[10px] uppercase font-bold tracking-widest mt-1">Subir</span>
+        </div>
         <div class="max-w-6xl mx-auto px-4 w-full">
             <header class="mb-8 border-b border-slate-200 pb-6 text-center">
                 <span class="text-amber-500 font-bold uppercase tracking-[0.2em] text-sm mb-2 block">Estándares
@@ -491,7 +443,6 @@
             </header>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-fr mt-10">
-
                 <!-- Educación -->
                 <div
                     class="bg-white rounded-2xl shadow-sm border border-slate-100 p-6 flex flex-col hover:shadow-md transition-shadow relative overflow-hidden">
@@ -606,131 +557,355 @@
                     </ul>
                 </div>
             </div>
-
-            <div class="absolute top-10 animate-bounce text-slate-400 opacity-80 cursor-pointer flex flex-col items-center hover:text-slate-600 transition-colors"
-                onclick="scrollToSection('pagina3')">
-                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
-                </svg>
-                <span class="text-[10px] uppercase font-bold tracking-widest mt-2">Subir</span>
-            </div>
+        </div>
+        <div class="absolute bottom-5 left-1/2 transform -translate-x-1/2 animate-bounce text-slate-400 opacity-80 cursor-pointer flex flex-col items-center hover:text-slate-600 transition-colors z-50"
+            onclick="scrollToSection('pagina7')">
+            <span class="text-[10px] uppercase font-bold tracking-widest mb-1">Bajar</span>
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3">
+                </path>
+            </svg>
         </div>
     </section>
 
+    <!-- PÁGINA 7: Intro Fuga de Cerebros -->
+    <section id="pagina7"
+        class="page-section bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 text-white relative">
+        <div class="absolute top-5 left-1/2 transform -translate-x-1/2 animate-bounce text-blue-300 opacity-80 cursor-pointer flex flex-col items-center hover:text-white transition-colors z-50"
+            onclick="scrollToSection('pagina6')">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
+            </svg>
+            <span class="text-[10px] uppercase font-bold tracking-widest mt-1">Subir</span>
+        </div>
+        <div class="max-w-7xl mx-auto px-4 w-full flex flex-col items-center justify-center text-center">
+            <span class="text-amber-400 font-bold uppercase tracking-[0.2em] text-sm md:text-base mb-6 drop-shadow-md">
+                Formación de investigadores
+            </span>
+            <h1
+                class="text-4xl md:text-6xl lg:text-7xl font-black tracking-tighter leading-tight text-transparent bg-clip-text bg-gradient-to-b from-white to-blue-200 text-balance drop-shadow-lg pb-2 lg:pb-4">
+                3. ¿Los investigadores formados en el extranjero regresan al país o existe fuga de cerebros?
+            </h1>
+        </div>
+        <div class="absolute bottom-5 left-1/2 transform -translate-x-1/2 animate-bounce text-blue-300 opacity-80 cursor-pointer flex flex-col items-center hover:text-white transition-colors z-50"
+            onclick="scrollToSection('pagina8')">
+            <span class="text-[10px] uppercase font-bold tracking-widest mb-1">Bajar</span>
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3">
+                </path>
+            </svg>
+        </div>
+    </section>
+
+    <!-- PÁGINA 8: Imagen Fuga de Cerebros -->
+    <section id="pagina8" class="page-section bg-black relative h-screen w-full overflow-hidden block">
+        <div class="absolute top-5 left-1/2 transform -translate-x-1/2 animate-bounce text-white opacity-80 cursor-pointer flex flex-col items-center hover:text-gray-300 transition-colors z-50 drop-shadow-lg"
+            onclick="scrollToSection('pagina7')">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
+            </svg>
+            <span class="text-[10px] uppercase font-bold tracking-widest mt-1">Subir</span>
+        </div>
+
+        <img src="https://i.ibb.co/84XchLwy/3jesus.png" alt="Análisis de Fuga de Cerebros"
+            class="absolute inset-0 w-full h-full object-cover z-0" />
+        <div class="absolute bottom-5 left-1/2 transform -translate-x-1/2 animate-bounce text-white opacity-80 cursor-pointer flex flex-col items-center hover:text-gray-300 transition-colors z-50 drop-shadow-lg"
+            onclick="scrollToSection('pagina9')">
+            <span class="text-[10px] uppercase font-bold tracking-widest mb-1">Bajar</span>
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3">
+                </path>
+            </svg>
+        </div>
+    </section>
+
+    <!-- PÁGINA 9: Intro Cultura Investigativa -->
+    <section id="pagina9"
+        class="page-section bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 text-white relative">
+        <div class="absolute top-5 left-1/2 transform -translate-x-1/2 animate-bounce text-blue-300 opacity-80 cursor-pointer flex flex-col items-center hover:text-white transition-colors z-50"
+            onclick="scrollToSection('pagina8')">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
+            </svg>
+            <span class="text-[10px] uppercase font-bold tracking-widest mt-1">Subir</span>
+        </div>
+        <div class="max-w-7xl mx-auto px-4 w-full flex flex-col items-center justify-center text-center">
+            <span class="text-amber-400 font-bold uppercase tracking-[0.2em] text-sm md:text-base mb-6 drop-shadow-md">
+                Formación de investigadores
+            </span>
+            <h1
+                class="text-4xl md:text-6xl lg:text-7xl font-black tracking-tighter leading-tight text-transparent bg-clip-text bg-gradient-to-b from-white to-blue-200 text-balance drop-shadow-lg pb-2 lg:pb-4">
+                4. ¿Las universidades panameñas promueven una cultura investigativa real o predominantemente docente?
+            </h1>
+        </div>
+        <div class="absolute bottom-5 left-1/2 transform -translate-x-1/2 animate-bounce text-blue-300 opacity-80 cursor-pointer flex flex-col items-center hover:text-white transition-colors z-50"
+            onclick="scrollToSection('pagina10')">
+            <span class="text-[10px] uppercase font-bold tracking-widest mb-1">Bajar</span>
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3">
+                </path>
+            </svg>
+        </div>
+    </section>
+
+    <!-- PÁGINA 10: Imagen Cultura Investigativa 1 -->
+    <section id="pagina10" class="page-section bg-black relative h-screen w-full overflow-hidden block">
+        <div class="absolute top-5 left-1/2 transform -translate-x-1/2 animate-bounce text-white opacity-80 cursor-pointer flex flex-col items-center hover:text-gray-300 transition-colors z-50 drop-shadow-lg"
+            onclick="scrollToSection('pagina9')">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
+            </svg>
+            <span class="text-[10px] uppercase font-bold tracking-widest mt-1">Subir</span>
+        </div>
+
+        <img src="https://i.ibb.co/XrsgYBtM/1yamis.png" alt="Análisis de Cultura Investigativa 1"
+            class="absolute inset-0 w-full h-full object-contain z-0" />
+
+        <div class="absolute bottom-5 left-1/2 transform -translate-x-1/2 animate-bounce text-white opacity-80 cursor-pointer flex flex-col items-center hover:text-gray-300 transition-colors z-50 drop-shadow-lg"
+            onclick="scrollToSection('pagina11')">
+            <span class="text-[10px] uppercase font-bold tracking-widest mb-1">Bajar</span>
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3">
+                </path>
+            </svg>
+        </div>
+    </section>
+
+    <!-- PÁGINA 11: Imagen Cultura Investigativa 2 -->
+    <section id="pagina11" class="page-section bg-black relative h-screen w-full overflow-hidden block">
+        <div class="absolute top-5 left-1/2 transform -translate-x-1/2 animate-bounce text-white opacity-80 cursor-pointer flex flex-col items-center hover:text-gray-300 transition-colors z-50 drop-shadow-lg"
+            onclick="scrollToSection('pagina10')">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
+            </svg>
+            <span class="text-[10px] uppercase font-bold tracking-widest mt-1">Subir</span>
+        </div>
+
+        <img src="https://i.ibb.co/JLVCpK8/2yamis.png" alt="Análisis de Cultura Investigativa 2"
+            class="absolute inset-0 w-full h-full object-contain z-0" />
+
+        <div class="absolute bottom-5 left-1/2 transform -translate-x-1/2 animate-bounce text-white opacity-80 cursor-pointer flex flex-col items-center hover:text-gray-300 transition-colors z-50 drop-shadow-lg"
+            onclick="scrollToSection('pagina12')">
+            <span class="text-[10px] uppercase font-bold tracking-widest mb-1">Bajar</span>
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3">
+                </path>
+            </svg>
+        </div>
+    </section>
+
+    <!-- PÁGINA 12: Imagen Cultura Investigativa 3 -->
+    <section id="pagina12" class="page-section bg-black relative h-screen w-full overflow-hidden block">
+        <div class="absolute top-5 left-1/2 transform -translate-x-1/2 animate-bounce text-white opacity-80 cursor-pointer flex flex-col items-center hover:text-gray-300 transition-colors z-50 drop-shadow-lg"
+            onclick="scrollToSection('pagina11')">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
+            </svg>
+            <span class="text-[10px] uppercase font-bold tracking-widest mt-1">Subir</span>
+        </div>
+
+        <img src="https://i.ibb.co/VW2X2T64/3yamis.png" alt="Análisis de Cultura Investigativa 3"
+            class="absolute inset-0 w-full h-full object-contain z-0" />
+    </section>
+
+    <!-- SCRIPTS -->
     <script>
-        /* ==============================================================
-           NAVEGACIÓN VERTICAL (PÁGINAS)
-           ============================================================== */
         function scrollToSection(sectionId) {
             document.getElementById(sectionId).scrollIntoView({ behavior: 'smooth' });
         }
 
-        const pages = ['pagina0', 'pagina1', 'pagina2', 'pagina3', 'pagina4'];
+        const pages = ['pagina0', 'pagina1', 'pagina2', 'pagina3', 'pagina4', 'pagina5', 'pagina6', 'pagina7', 'pagina8', 'pagina9', 'pagina10', 'pagina11', 'pagina12'];
+        let isScrolling = false;
 
         document.addEventListener('keydown', function (event) {
-            const scrollPos = window.scrollY;
-            const windowHeight = window.innerHeight;
-            const currentIndex = Math.round(scrollPos / windowHeight);
+            if (isScrolling) return;
+            // Evitar interferencia si el usuario est&aacute; en un input
+            if (event.target.tagName && ['input', 'textarea'].includes(event.target.tagName.toLowerCase())) return;
+
+            // Encontrar la secci&oacute;n actual m&aacute;s visible
+            let currentIndex = 0;
+            let minDistance = Infinity;
+            for (let i = 0; i < pages.length; i++) {
+                const el = document.getElementById(pages[i]);
+                if (!el) continue;
+                const rect = el.getBoundingClientRect();
+                const distance = Math.abs(rect.top);
+                if (distance < minDistance) {
+                    minDistance = distance;
+                    currentIndex = i;
+                }
+            }
 
             if (event.key === 'ArrowDown') {
                 event.preventDefault();
                 if (currentIndex < pages.length - 1) {
+                    isScrolling = true;
                     scrollToSection(pages[currentIndex + 1]);
+                    setTimeout(() => isScrolling = false, 800);
                 }
             } else if (event.key === 'ArrowUp') {
                 event.preventDefault();
                 if (currentIndex > 0) {
+                    isScrolling = true;
                     scrollToSection(pages[currentIndex - 1]);
+                    setTimeout(() => isScrolling = false, 800);
                 }
             }
         });
 
-        /* ==============================================================
-           LÓGICA DEL CARRUSEL (PÁGINA 1)
-           ============================================================== */
-        let currentSlide = 0;
-        const totalSlides = 3;
+        // Configuración Global Chart.js para un diseño más elegante y profesional
+        Chart.defaults.font.family = "'Inter', sans-serif";
+        Chart.defaults.color = '#64748b';
+        Chart.defaults.font.size = 13;
 
-        function showSlide(index) {
-            for (let i = 0; i < totalSlides; i++) {
-                document.getElementById('slide' + i).classList.remove('active');
-                document.querySelectorAll('.dot')[i].classList.remove('active');
+        const commonOptions = {
+            responsive: true,
+            maintainAspectRatio: false,
+            animation: {
+                duration: 2000,
+                easing: 'easeOutQuart'
+            },
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                    labels: {
+                        padding: 25,
+                        usePointStyle: true,
+                        font: { size: 14, weight: '500' }
+                    }
+                },
+                tooltip: {
+                    backgroundColor: 'rgba(15, 23, 42, 0.9)',
+                    titleFont: { size: 14, family: "'Inter', sans-serif" },
+                    bodyFont: { size: 14, family: "'Inter', sans-serif" },
+                    padding: 14,
+                    cornerRadius: 8,
+                    intersect: false,
+                    mode: 'index',
+                    boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)'
+                }
             }
-            document.getElementById('slide' + index).classList.add('active');
-            document.querySelectorAll('.dot')[index].classList.add('active');
-            currentSlide = index;
+        };
+
+        function getGradient(ctx, colorStart, colorEnd) {
+            let gradient = ctx.createLinearGradient(0, 0, 0, 400);
+            gradient.addColorStop(0, colorStart);
+            gradient.addColorStop(1, colorEnd);
+            return gradient;
         }
 
-        function nextSlide() { showSlide((currentSlide + 1) % totalSlides); }
-        function prevSlide() { showSlide((currentSlide - 1 + totalSlides) % totalSlides); }
-        function goToSlide(index) { showSlide(index); }
-
-        /* ==============================================================
-           LÓGICA DEL CARRUSEL 2 (PÁGINA 4)
-           ============================================================== */
-        let currentSlide2 = 0;
-        const totalSlides2 = 3;
-
-        function showSlide2(index) {
-            for (let i = 0; i < totalSlides2; i++) {
-                document.getElementById('slide2-' + i).style.display = 'none';
-                document.querySelectorAll('.dot2')[i].classList.remove('active');
-            }
-            document.getElementById('slide2-' + index).style.display = 'block';
-            document.querySelectorAll('.dot2')[index].classList.add('active');
-            currentSlide2 = index;
-        }
-
-        function nextSlide2() { showSlide2((currentSlide2 + 1) % totalSlides2); }
-        function prevSlide2() { showSlide2((currentSlide2 - 1 + totalSlides2) % totalSlides2); }
-        function goToSlide2(index) { showSlide2(index); }
-
-        /* ==============================================================
-           INICIALIZACIÓN DE GRÁFICAS DE PÁGINA 1
-           ============================================================== */
-
-        // --- Gráfica 1 ---
-        new Chart(document.getElementById('chart1').getContext('2d'), {
+        // --- Chart 1 ---
+        let ctx1 = document.getElementById('chart1').getContext('2d');
+        new Chart(ctx1, {
             type: 'bar',
             data: {
                 labels: ['2020', '2021', '2022', '2023', '2024'],
                 datasets: [
-                    { label: 'Matriculados', data: [157, 334, 286, 606, 1606], backgroundColor: 'rgba(13, 110, 253, 0.7)', borderColor: '#0d6efd', borderWidth: 1, order: 2 },
-                    { label: 'Graduados', data: [7, 39, 71, 64, 117], type: 'line', backgroundColor: '#198754', borderColor: '#198754', borderWidth: 3, pointBackgroundColor: '#fff', pointBorderColor: '#198754', pointBorderWidth: 2, pointRadius: 5, tension: 0.3, order: 1 }
+                    {
+                        label: 'Matriculados',
+                        data: [157, 334, 286, 606, 1606],
+                        backgroundColor: getGradient(ctx1, 'rgba(59, 130, 246, 0.95)', 'rgba(59, 130, 246, 0.2)'),
+                        borderColor: '#3b82f6',
+                        borderWidth: 2,
+                        borderRadius: 6,
+                        order: 2
+                    },
+                    {
+                        label: 'Graduados',
+                        data: [7, 39, 71, 64, 117],
+                        type: 'line',
+                        backgroundColor: getGradient(ctx1, 'rgba(16, 185, 129, 0.2)', 'rgba(16, 185, 129, 0)'),
+                        borderColor: '#10b981',
+                        borderWidth: 4,
+                        pointBackgroundColor: '#ffffff',
+                        pointBorderColor: '#10b981',
+                        pointBorderWidth: 3,
+                        pointRadius: 6,
+                        pointHoverRadius: 8,
+                        tension: 0.4,
+                        fill: true,
+                        order: 1
+                    }
                 ]
             },
-            options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' }, tooltip: { mode: 'index', intersect: false } } }
+            options: {
+                ...commonOptions,
+                scales: {
+                    y: {
+                        grid: { color: '#e2e8f0', drawBorder: false },
+                        border: { dash: [5, 5] },
+                        beginAtZero: true
+                    },
+                    x: {
+                        grid: { display: false }
+                    }
+                }
+            }
         });
 
-        // --- Gráfica 2 ---
-        new Chart(document.getElementById('chart2').getContext('2d'), {
+        // --- Chart 2 ---
+        let ctx2 = document.getElementById('chart2').getContext('2d');
+        new Chart(ctx2, {
             type: 'bar',
             data: {
                 labels: ['2020', '2021', '2022', '2023', '2024'],
                 datasets: [
-                    { label: 'UP', data: [25, 40, 63, 293, 255], borderColor: '#0d6efd', backgroundColor: 'rgba(13, 110, 253, 0.8)', borderWidth: 1 },
-                    { label: 'UTP', data: [0, 14, 0, 20, 43], borderColor: '#6610f2', backgroundColor: 'rgba(102, 16, 242, 0.8)', borderWidth: 1 },
-                    { label: 'UNACHI', data: [41, 173, 85, 28, 116], borderColor: '#198754', backgroundColor: 'rgba(25, 135, 84, 0.8)', borderWidth: 1 },
-                    { label: 'UDELAS', data: [23, 16, 19, 46, 30], borderColor: '#dc3545', backgroundColor: 'rgba(220, 53, 69, 0.8)', borderWidth: 1 },
-                    { label: 'UMIP', data: [0, 0, 0, 0, 0], borderColor: '#ffc107', backgroundColor: 'rgba(255, 193, 7, 0.8)', borderWidth: 1 },
-                    { label: 'Particulares', data: [68, 91, 119, 219, 1162], borderColor: '#fd7e14', backgroundColor: 'rgba(253, 126, 20, 0.8)', borderWidth: 1 }
+                    { label: 'UP', data: [25, 40, 63, 293, 255], backgroundColor: 'rgba(59, 130, 246, 0.85)', borderRadius: 4 },
+                    { label: 'UTP', data: [0, 14, 0, 20, 43], backgroundColor: 'rgba(139, 92, 246, 0.85)', borderRadius: 4 },
+                    { label: 'UNACHI', data: [41, 173, 85, 28, 116], backgroundColor: 'rgba(16, 185, 129, 0.85)', borderRadius: 4 },
+                    { label: 'UDELAS', data: [23, 16, 19, 46, 30], backgroundColor: 'rgba(239, 68, 68, 0.85)', borderRadius: 4 },
+                    { label: 'UMIP', data: [0, 0, 0, 0, 0], backgroundColor: 'rgba(245, 158, 11, 0.85)', borderRadius: 4 },
+                    { label: 'Particulares', data: [68, 91, 119, 219, 1162], backgroundColor: 'rgba(249, 115, 22, 0.85)', borderRadius: 4 }
                 ]
             },
-            options: { responsive: true, maintainAspectRatio: false, scales: { y: { stacked: true }, x: { stacked: true } }, plugins: { legend: { position: 'bottom', labels: { usePointStyle: true, padding: 20 } }, tooltip: { mode: 'index', intersect: false } } }
+            options: {
+                ...commonOptions,
+                scales: {
+                    y: {
+                        stacked: true,
+                        grid: { color: '#e2e8f0', drawBorder: false },
+                        border: { dash: [5, 5] },
+                        beginAtZero: true
+                    },
+                    x: {
+                        stacked: true,
+                        grid: { display: false }
+                    }
+                }
+            }
         });
 
-        // --- Gráfica 3 ---
-        new Chart(document.getElementById('areaChart').getContext('2d'), {
+        // --- Chart 3 ---
+        let ctx3 = document.getElementById('areaChart').getContext('2d');
+        new Chart(ctx3, {
             type: 'doughnut',
             data: {
                 labels: ['Educación', 'Humanidades', 'Admin/Negocios', 'Ingeniería/TI', 'Ciencias de la Salud'],
-                datasets: [{ data: [42, 9, 31, 12, 6], backgroundColor: ['#4f46e5', '#ec4899', '#10b981', '#f59e0b', '#94a3b8'], borderWidth: 2, borderColor: '#ffffff' }]
+                datasets: [{
+                    data: [42, 9, 31, 12, 6],
+                    backgroundColor: ['#6366f1', '#ec4899', '#10b981', '#f59e0b', '#94a3b8'],
+                    borderWidth: 2,
+                    borderColor: '#ffffff',
+                    hoverOffset: 15
+                }]
             },
-            options: { responsive: true, maintainAspectRatio: false, cutout: '65%', plugins: { legend: { position: 'right', labels: { padding: 20, usePointStyle: true, pointStyle: 'circle' } } } }
+            options: {
+                ...commonOptions,
+                cutout: '70%',
+                plugins: {
+                    ...commonOptions.plugins,
+                    legend: { position: 'right', labels: { padding: 30, usePointStyle: true, font: { size: 15 } } },
+                    tooltip: {
+                        ...commonOptions.plugins.tooltip,
+                        callbacks: {
+                            label: function (context) {
+                                return ' ' + context.label + ': ' + context.parsed + '%';
+                            }
+                        }
+                    }
+                }
+            }
         });
-
-        // Gráfica Interactiva Internacional fue reemplazada por la infografía de html
-
     </script>
 </body>
 
