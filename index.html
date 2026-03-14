@@ -706,6 +706,38 @@
 
         <img src="https://i.ibb.co/VW2X2T64/3yamis.png" alt="Análisis de Cultura Investigativa 3"
             class="absolute inset-0 w-full h-full object-contain z-0" />
+
+        <div class="absolute bottom-5 left-1/2 transform -translate-x-1/2 animate-bounce text-white opacity-80 cursor-pointer flex flex-col items-center hover:text-gray-300 transition-colors z-50 drop-shadow-lg"
+            onclick="scrollToSection('pagina13')">
+            <span class="text-[10px] uppercase font-bold tracking-widest mb-1">Bajar</span>
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3">
+                </path>
+            </svg>
+        </div>
+    </section>
+
+    <!-- PÁGINA 13: Conclusión -->
+    <section id="pagina13"
+        class="page-section bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 text-white relative">
+        <div class="absolute top-5 left-1/2 transform -translate-x-1/2 animate-bounce text-blue-300 opacity-80 cursor-pointer flex flex-col items-center hover:text-white transition-colors z-50"
+            onclick="scrollToSection('pagina12')">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
+            </svg>
+            <span class="text-[10px] uppercase font-bold tracking-widest mt-1">Subir</span>
+        </div>
+        <div class="max-w-7xl mx-auto px-4 w-full flex flex-col items-center justify-center text-center">
+            <span class="text-amber-400 font-bold uppercase tracking-[0.2em] text-sm md:text-base mb-6 drop-shadow-md">
+                Conclusión
+            </span>
+            <h1
+                class="text-3xl md:text-4xl lg:text-5xl font-black tracking-tighter leading-tight text-transparent bg-clip-text bg-gradient-to-b from-white to-blue-200 text-justify indent-8 md:indent-16 drop-shadow-lg pb-2 lg:pb-4 max-w-5xl">
+                Panamá forma pocos investigadores y los que existen enfrentan barreras reales: poco tiempo, recursos
+                limitados y falta de apoyo institucional. Para que el país avance, sus universidades deben asumir un rol
+                activo en la producción de conocimiento, no solo en la enseñanza.
+            </h1>
+        </div>
     </section>
 
     <!-- SCRIPTS -->
@@ -714,7 +746,7 @@
             document.getElementById(sectionId).scrollIntoView({ behavior: 'smooth' });
         }
 
-        const pages = ['pagina0', 'pagina1', 'pagina2', 'pagina3', 'pagina4', 'pagina5', 'pagina6', 'pagina7', 'pagina8', 'pagina9', 'pagina10', 'pagina11', 'pagina12'];
+        const pages = ['pagina0', 'pagina1', 'pagina2', 'pagina3', 'pagina4', 'pagina5', 'pagina6', 'pagina7', 'pagina8', 'pagina9', 'pagina10', 'pagina11', 'pagina12', 'pagina13'];
         let isScrolling = false;
 
         document.addEventListener('keydown', function (event) {
